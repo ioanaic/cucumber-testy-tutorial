@@ -45,37 +45,7 @@ public class LoginTest extends TestBase {
     }
 
 
-    @Test
-    public void tryTochangePasswordWithInvalidCurrentPassword() {
-        // doLogin("eu@fast.com","eu.pass");
-        preferencesWindow();
-        WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"preferences-win\"]//input[@name=\"password\"]'"));
-        WebElement newpasswordField = driver.findElement(By.xpath("//*[@id=\"preferences-win\"]//input[@name=\"newPassword\"]'"));
-        WebElement confirmpasswordField = driver.findElement(By.xpath("//*[@id=\"preferences-win\"]//input[@name=\"newPasswordRepeat\"]'"));
-        WebElement saveBtn = driver.findElement(By.xpath("//*[@id='preferences-win']//button[text()='Save']"));
-
-        saveBtn.click();
-        passwordField.sendKeys("wrong.pass");
-        newpasswordField.sendKeys("new.pass");
 
 
-        //  assertThat(message, is("Invalid user or password!"));
-
-    }
-
-
-    public void doLogin(String user, String password) {
-        System.out.println("ready");
-        driver.get("https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/login.html");
-        driver.findElement(By.name("username")).sendKeys(user);
-
-        WebElement passwordElement = driver.findElement(By.id("password"));
-        passwordElement.sendKeys(password);
-//    passwordElement.clear();
-//    passwordElement.sendKeys("eu.pass1");
-
-        WebElement loginButton = driver.findElement(By.id("loginButton"));
-        loginButton.click();
-    }
 
 }
