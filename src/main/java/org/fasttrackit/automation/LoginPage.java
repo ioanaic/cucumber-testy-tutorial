@@ -14,8 +14,6 @@ public class LoginPage {
     @FindBy(id = "loginButton")
     public WebElement loginBtn;
 
-    public static void main(String[] args) {
-        LoginPage loginPage = new LoginPage();
-    }
+
 
 }
