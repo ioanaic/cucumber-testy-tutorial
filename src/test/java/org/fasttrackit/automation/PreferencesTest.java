@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by Ioana on 5/11/2017.
@@ -44,21 +45,31 @@ public class PreferencesTest extends TestBase {
     @Test
     public void tryTochangePasswordWithInvalidCurrentPassword() {
         // doLogin("eu@fast.com","eu.pass");
+        changePassword();
+
+        WebElement statusMsg = driver.findElement(By.xpath("//'[*id='preferences-win']//*[@class=status-msg]"));
+        String message = statusMsg.getText();
+        System.out.println(message);
+
+        assertThat(message, is("Your preview password is incorrect!"));
+
+    }
+
+    private void changePassword() {
         preferencesWindow();
-        WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"preferences-win\"]//input[@name=\"password\"]'"));
-        WebElement newpasswordField = driver.findElement(By.xpath("//*[@id=\"preferences-win\"]//input[@name=\"newPassword\"]'"));
-        WebElement confirmpasswordField = driver.findElement(By.xpath("//*[@id=\"preferences-win\"]//input[@name=\"newPasswordRepeat\"]'"));
+        WebElement passwordField = driver.findElement(By.xpath("//*[@id='preferences-win']//input[@name='password']"));
+        WebElement newpasswordField = driver.findElement(By.xpath("//*[@id='preferences-win']//input[@name='newPassword']"));
+        WebElement confirmpasswordField = driver.findElement(By.xpath("//*[@id='preferences-win']//input[@name='newPasswordRepeat']"));
         WebElement saveBtn = driver.findElement(By.xpath("//*[@id='preferences-win']//button[text()='Save']"));
 
         saveBtn.click();
         passwordField.sendKeys("wrong.pass");
         newpasswordField.sendKeys("new.pass");
-
-        WebElement statusMsg = driver.findElement(By.xpath("//'[*id='preferences-win']//*class=status-msg"));
-
-        assertThat(message, is("Invalid user or password!"));
-
+        confirmpasswordField.sendKeys("new.pass");
     }
 
+    @Test
+public void tryToChangePassWithInvalidConfimPass(){
 
+}
 }
