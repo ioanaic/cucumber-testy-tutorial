@@ -13,6 +13,8 @@ public abstract class TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestBase.class);
 
     public static WebDriver driver;
+    public static String USER_NAME = "eu@fast.com";
+    public static String PASSWORD = "eu.pass";
 
     static {
         startSuite();
