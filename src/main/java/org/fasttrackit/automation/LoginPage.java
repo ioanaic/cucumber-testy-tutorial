@@ -1,5 +1,6 @@
 package org.fasttrackit.automation;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -8,12 +9,28 @@ import org.openqa.selenium.support.FindBy;
  */
 public class LoginPage {
     @FindBy(name = "username")
-    public WebElement userNameElement;
+    private WebElement userNameElement;
     @FindBy(id = "password")
-    public WebElement passwordElement;
+    private WebElement passwordElement;
     @FindBy(id = "loginButton")
-    public WebElement loginBtn;
+    private WebElement loginBtn;
+    @FindBy(className = "error-msg")
+    private WebElement errorMessage;
+
+    private LoginPage page;
+    private WebDriver driver;
 
 
+
+    public void login(String user,String pass){
+        userNameElement.sendKeys(user);
+        passwordElement.sendKeys(pass);
+        loginBtn.click();
+    }
+
+    public String getInvalidUserOrPassWarningMessage(){
+        String message = errorMessage.getText();
+        return message;
+    }
 
 }
