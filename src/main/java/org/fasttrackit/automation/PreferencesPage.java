@@ -15,10 +15,13 @@ public class PreferencesPage {
     private WebElement passwordField;
     @FindBy(xpath = "//*[@id='preferences-win']//input[@name='newPassword']")
     private WebElement newPasswordField;
-    @FindBy()
+    @FindBy(xpath = "//*[@id='preferences-win']//input[@name='newPasswordRepeat']")
     private WebElement confirmPasswordField;
+    @FindBy(xpath = "//*[@id='preferences-win']//button[text()='Save']")
     private WebElement saveBtn;
+    @FindBy(xpath = "//*[@id='preferences-win']//*[@class='status-msg']")
     private WebElement statusMsg;
+    @FindBy(css = "#preferences-win .modal-footer button")
     private WebElement closeBtn;
 
 
