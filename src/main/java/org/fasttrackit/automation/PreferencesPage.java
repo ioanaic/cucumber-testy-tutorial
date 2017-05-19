@@ -24,5 +24,22 @@ public class PreferencesPage {
     @FindBy(css = "#preferences-win .modal-footer button")
     private WebElement closeBtn;
 
+    public void open(){
+        preferencesBtn.click();
+       com.sdl.selenium.web.utils.Utils.sleep(200);
+    }
+
+
+    public void changePassword(String pass, String newPass, String repeatPass){
+        passwordField.sendKeys(pass);
+        newPasswordField.sendKeys(newPass);
+        confirmPasswordField.sendKeys(repeatPass);
+        saveBtn.click();
+    }
+
+    public void close(){
+        xBtn.click();
+        com.sdl.selenium.web.utils.Utils.sleep(200);
+    }
 
 }
