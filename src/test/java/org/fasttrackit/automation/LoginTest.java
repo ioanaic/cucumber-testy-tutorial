@@ -31,7 +31,6 @@ public class LoginTest extends TestBase {
 
         String message = page.getInvalidUserOrPassWarningMessage();
         System.out.println(message);
-
         assertThat(message, is("Invalid user or password!"));
 
 
