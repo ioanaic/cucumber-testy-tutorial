@@ -11,7 +11,7 @@ import com.sdl.selenium.web.Browser;
 
 public abstract class TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestBase.class);
-    
+
     public static WebDriver driver;
 
     static {
@@ -33,8 +33,6 @@ public abstract class TestBase {
 
         WebElement passwordElement = driver.findElement(By.id("password"));
         passwordElement.sendKeys(password);
-//    passwordElement.clear();
-//    passwordElement.sendKeys("eu.pass1");
 
         WebElement loginButton = driver.findElement(By.id("loginButton"));
         loginButton.click();
