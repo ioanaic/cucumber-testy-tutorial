@@ -42,4 +42,11 @@ public class PreferencesPage {
         com.sdl.selenium.web.utils.Utils.sleep(200);
     }
 
+    public String getIncorrectMessage(){
+        String messageText = statusMsg.getText();
+        return messageText;
+    }
+
+
+
 }
