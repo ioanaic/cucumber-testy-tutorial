@@ -1,8 +1,6 @@
 package org.fasttrackit.automation;
 
 import org.fasttrackit.util.TestBase;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
@@ -25,37 +23,30 @@ public class PreferencesTest extends TestBase {
         doLogin(USER_NAME, PASSWORD);
         page.open();
         page.close();
-
     }
 
     @Test
-    public void tryTochangePasswordWithInvalidCurrentPassword() {
-        // doLogin("eu@fast.com","eu.pass");
-        changePassword();
-
-        WebElement statusMsg = driver.findElement(By.xpath("//'[*id='preferences-win']//*[@class=status-msg]"));
-        String message = statusMsg.getText();
-        System.out.println(message);
-
+    public void tryTochangePasswordWithInvalidCurrentPasswordTest() {
+        page.changePassword("wrong.pass", "new.pass", "new.pass");
+        String message = page.getIncorrectMessage();
         assertThat(message, is("Your preview password is incorrect!"));
 
     }
 
-    private void changePassword() {
-
-        WebElement passwordField = driver.findElement(By.xpath("//*[@id='preferences-win']//input[@name='password']"));
-        WebElement newpasswordField = driver.findElement(By.xpath("//*[@id='preferences-win']//input[@name='newPassword']"));
-        WebElement confirmpasswordField = driver.findElement(By.xpath("//*[@id='preferences-win']//input[@name='newPasswordRepeat']"));
-        WebElement saveBtn = driver.findElement(By.xpath("//*[@id='preferences-win']//button[text()='Save']"));
-
-        saveBtn.click();
-        passwordField.sendKeys("wrong.pass");
-        newpasswordField.sendKeys("new.pass");
-        confirmpasswordField.sendKeys("new.pass");
-    }
-
     @Test
-    public void tryToChangePassWithInvalidConfimPass() {
+    public void tryToChangePasswordWithInvalidConfirmPasswordTest() {
+        page.changePassword("eu.pass","new.pass","new.pass.wrong");
+        String message = page.getIncorrectMessage();
+        assertThat(message,is("Password does not match the confirm password!"));
+    }
+    @Test
+    public void successChangePassTest(){
+        page.changePassword("eu.pass","new.pass","new.pass");
+        String message = page.getIncorrectMessage();
+        assertThat(message,is("Your password has been successfully changed."));
+
+
 
     }
+
 }
