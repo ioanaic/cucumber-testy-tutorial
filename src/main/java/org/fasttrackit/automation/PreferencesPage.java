@@ -1,5 +1,6 @@
 package org.fasttrackit.automation;
 
+import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -26,7 +27,7 @@ public class PreferencesPage {
 
     public void open(){
         preferencesBtn.click();
-       com.sdl.selenium.web.utils.Utils.sleep(200);
+       Utils.sleep(400);
     }
 
 
@@ -39,7 +40,7 @@ public class PreferencesPage {
 
     public void close(){
         xBtn.click();
-        com.sdl.selenium.web.utils.Utils.sleep(200);
+        Utils.sleep(400);
     }
 
     public String getIncorrectMessage(){
