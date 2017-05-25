@@ -42,7 +42,7 @@ public class PreferencesPage {
         xBtn.click();
         Utils.sleep(400);
     }
-
+//test
     public String getIncorrectMessage(){
         String messageText = statusMsg.getText();
         return messageText;
