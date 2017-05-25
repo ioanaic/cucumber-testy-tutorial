@@ -1,6 +1,8 @@
 package org.fasttrackit.automation;
 
 import org.fasttrackit.util.TestBase;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
@@ -27,7 +29,7 @@ public class PreferencesTest extends TestBase {
 
     @Test
     public void tryTochangePasswordWithInvalidCurrentPasswordTest() {
-        page.changePassword("wrong.pass", "new.pass", "new.pass");
+        changePassword("wrong.pass", "new.pass", "new.pass");
         String message = page.getIncorrectMessage();
         assertThat(message, is("Your preview password is incorrect!"));
 
@@ -35,18 +37,36 @@ public class PreferencesTest extends TestBase {
 
     @Test
     public void tryToChangePasswordWithInvalidConfirmPasswordTest() {
-        page.changePassword("eu.pass","new.pass","new.pass.wrong");
+        changePassword("eu.pass","new.pass","new.pass.wrong");
         String message = page.getIncorrectMessage();
         assertThat(message,is("Password does not match the confirm password!"));
     }
     @Test
     public void successChangePassTest(){
-        page.changePassword("eu.pass","new.pass","new.pass");
+        changePassword("eu.pass","new.pass","new.pass");
         String message = page.getIncorrectMessage();
         assertThat(message,is("Your password has been successfully changed."));
 
+        page.close();
+        WebElement logoutBtn = driver.findElement(By.linkText("Logout"));
+        logoutBtn.click();
+
+        PASSWORD = "new.pass";
+        doLogin(USER_NAME,PASSWORD);
+        logoutBtn = driver.findElement(By.linkText("Logout"));
+        logoutBtn.click();
+
+        changePassword("new.pass","eu.pass","eu.pass");
+        assertThat(message,is("Your password has been successfully changed."));
+        PASSWORD = "eu.pass";
 
 
+    }
+
+    private void changePassword(String pass, String newPass, String repeatPass){
+        doLogin(USER_NAME,PASSWORD);
+        page.open();
+        page.changePassword(pass,newPass,repeatPass);
     }
 
 }
