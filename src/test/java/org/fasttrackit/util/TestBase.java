@@ -1,5 +1,6 @@
 package org.fasttrackit.util;
 
+import org.fasttrackit.automation.LoginView;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,9 @@ public abstract class TestBase {
     public static WebDriver driver;
     public static String USER_NAME = "eu@fast.com";
     public static String PASSWORD = "eu.pass";
+
+
+    protected LoginView loginPage = new LoginView();
 
     static {
         startSuite();
