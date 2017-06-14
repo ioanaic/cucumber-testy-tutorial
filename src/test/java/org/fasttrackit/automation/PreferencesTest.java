@@ -14,59 +14,63 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class PreferencesTest extends TestBase {
 
-    PreferencesPage page;
+//    PreferencesPage page;
+//
+//    public PreferencesTest() {
+//        page = PageFactory.initElements(driver, PreferencesPage.class);
+//    }
 
-    public PreferencesTest() {
-        page = PageFactory.initElements(driver, PreferencesPage.class);
-    }
-
-    @Test
-    public void preferencesWindowShouldCloseTest() {
-        doLogin(USER_NAME, PASSWORD);
-        page.open();
-        page.close();
-    }
+    private PreferencesView page = new PreferencesView();
 
     @Test
-    public void tryTochangePasswordWithInvalidCurrentPasswordTest() {
+    public void tryToChangePassWithInvalidPreviewPasswordTest() {
         changePassword("wrong.pass", "new.pass", "new.pass");
-        String message = page.getIncorrectMessage();
+
+//        WebElement statusMsg = driver.findElement(By.xpath("//*[@id='preferences-win']//*[@class='status-msg']"));
+         String message =  page.getStatusMsg();
+
+
         assertThat(message, is("Your preview password is incorrect!"));
-
     }
 
     @Test
-    public void tryToChangePasswordWithInvalidConfirmPasswordTest() {
-        changePassword("eu.pass","new.pass","new.pass.wrong");
-        String message = page.getIncorrectMessage();
-        assertThat(message,is("Password does not match the confirm password!"));
+    public void tryToChangePassWithInvalidConfirmPassTest() {
+        changePassword("eu.pass", "new.pass", "new.pass.wrong");
+
+        WebElement statusMsg = driver.findElement(By.xpath("//*[@id='preferences-win']//*[@class='status-msg']"));
+        String message = statusMsg.getText();
+        assertThat(message, is("Password does not match the confirm password!"));
     }
+
     @Test
-    public void successChangePassTest(){
-        changePassword("eu.pass","new.pass","new.pass");
-        String message = page.getIncorrectMessage();
-        assertThat(message,is("Your password has been successfully changed."));
+    public void successChangePassTest() {
+        changePassword(PASSWORD, "new.pass", "new.pass");
+
+        WebElement statusMsg = driver.findElement(By.xpath("//*[@id='preferences-win']//*[@class='status-msg']"));
+        String message = statusMsg.getText();
+        assertThat(message, is("Your password has been successfully changed."));
 
         page.close();
         WebElement logoutBtn = driver.findElement(By.linkText("Logout"));
         logoutBtn.click();
 
         PASSWORD = "new.pass";
-        doLogin(USER_NAME,PASSWORD);
+        doLogin(USER_NAME, PASSWORD);
         logoutBtn = driver.findElement(By.linkText("Logout"));
         logoutBtn.click();
 
-        changePassword("new.pass","eu.pass","eu.pass");
-        assertThat(message,is("Your password has been successfully changed."));
+        // revert to old pass
+        changePassword("new.pass", "eu.pass", "eu.pass");
+        statusMsg = driver.findElement(By.xpath("//*[@id='preferences-win']//*[@class='status-msg']"));
+        message = statusMsg.getText();
+        assertThat(message, is("Your password has been successfully changed."));
         PASSWORD = "eu.pass";
-
-
     }
 
-    private void changePassword(String pass, String newPass, String repeatPass){
-        doLogin(USER_NAME,PASSWORD);
+    private void changePassword(String pass, String newPass, String repeatPass) {
+        doLogin(USER_NAME, PASSWORD);
         page.open();
-        page.changePassword(pass,newPass,repeatPass);
+        page.changePassword(pass, newPass, repeatPass);
     }
 
 }
