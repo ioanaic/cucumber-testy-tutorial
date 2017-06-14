@@ -1,5 +1,7 @@
 package org.fasttrackit.util;
 
+import com.sdl.selenium.web.utils.PropertiesReader;
+import com.sdl.selenium.web.utils.Utils;
 import org.fasttrackit.automation.LoginView;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.sdl.selenium.utils.config.WebDriverConfig;
 import com.sdl.selenium.web.Browser;
+import org.testng.ITestResult;
 
 public abstract class TestBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestBase.class);
@@ -35,12 +38,13 @@ public abstract class TestBase {
     public void doLogin(String user, String password) {
         System.out.println("ready");
         driver.get("https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/login.html");
-        driver.findElement(By.name("username")).sendKeys(user);
+       loginPage.login(user,password);
+    }
 
-        WebElement passwordElement = driver.findElement(By.id("password"));
-        passwordElement.sendKeys(password);
-
-        WebElement loginButton = driver.findElement(By.id("loginButton"));
-        loginButton.click();
+    public void end(ITestResult result){
+        if (!result.isSuccess()){
+            LOGGER.warn("Test Failed: "+ result.getName());
+            Utils.getScreenShot(result.getName(), PropertiesReader.RESOURCES_PATH+"\\results\\screens");
+        }
     }
 }
