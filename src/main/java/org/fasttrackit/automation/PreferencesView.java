@@ -10,21 +10,29 @@ import org.openqa.selenium.support.FindBy;
 /**
  * Created by ioana.crisan on 19-05-2017.
  */
-public class PreferencesView {
+public class PreferencesView extends WebLocator {
 
-    private Button preferencesBtn = new Button().setElCssSelector(".navbar-header button");
+    private Button preferencesBtn = new Button().setText("Preferences");
 
-    private WebLocator xBtn = new WebLocator().setElCssSelector("#preferences-win button.close");
+    public PreferencesView() {
+        setId("preferences-win");
+    }
 
-    private TextField passwordField = new TextField().setElPath("//*[@id='preferences-win']//input[@name='password']");
-    private TextField newPasswordField = new TextField().setElPath("//*[@id='preferences-win']//input[@name='newPassword']");
-    private TextField confirmPasswordField = new TextField().setElPath("//*[@id='preferences-win']//input[@name='newPasswordRepeat']");
+//  private WebLocator win = new WebLocator().setId("preferences-win");
 
-    private Button saveBtn = new Button().setElPath("//*[@id='preferences-win']//button[text()='Save']");
+    private WebLocator xBtn = new Button(this).setClasses("close");
 
-    private WebLocator statusMsg = new WebLocator().setElPath("//*[@id='preferences-win']//*[@class='status-msg']");
+    private TextField passwordField = new TextField(this).setName("password");
+    private TextField newPasswordField = new TextField(this).setName("newPassword");
+    private TextField confirmPasswordField = new TextField(this).setName("newPasswordRepeat");
 
-    private Button closeBtn = new Button().setElCssSelector("#preferences-win .modal-footer button");
+    private Button saveBtn = new Button().setText("Save");
+
+    private WebLocator statusMsg = new WebLocator(this).setClasses("status-msg");
+
+    //or private Button closeBtn = new Button(win).setElCssSelector(".modal-footer button");
+
+    private Button closeBtn = new Button(this).setText("Close");
 
     public void open() {
         preferencesBtn.click();
@@ -33,9 +41,9 @@ public class PreferencesView {
 
 
     public void changePassword(String pass, String newPass, String repeatPass) {
-        passwordField.sendKeys(pass);
-        newPasswordField.sendKeys(newPass);
-        confirmPasswordField.sendKeys(repeatPass);
+        passwordField.setValue(pass);
+        newPasswordField.setValue(newPass);
+        confirmPasswordField.setValue(repeatPass);
         saveBtn.click();
     }
 
@@ -44,11 +52,15 @@ public class PreferencesView {
         Utils.sleep(400);
     }
 
-    //test
-    public String getIncorrectMessage() {
-        String messageText = statusMsg.getText();
-        return messageText;
+    public String getStatusMsg() {
+        return statusMsg.getText();
     }
+
+    //test
+//    public String getIncorrectMessage() {
+//        String messageText = statusMsg.getText();
+//        return messageText;
+//    }
 
 
 }
