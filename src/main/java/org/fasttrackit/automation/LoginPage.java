@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 /**
  * Created by Ioana on 5/18/2017.
  */
+
+//TEST
 public class LoginPage {
     @FindBy(name = "username")
     private WebElement userNameElement;
